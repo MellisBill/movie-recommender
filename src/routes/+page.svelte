@@ -142,7 +142,5 @@
 			</button>
 		{/each}
 	</div>
-	<a href="/genres/{selectedGenre}">
-		<button class="btn bg-yellow-400 my-3"> Continue </button>
-	</a>
+	<button class="btn bg-yellow-400 my-3"> <a href="/titles?genre={selectedGenre}">Continue</a> </button>
 </div>

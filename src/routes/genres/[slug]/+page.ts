@@ -5,7 +5,7 @@ export const load = (async ({ fetch, params }) => {
 	let movies: string[] = [];
 	// const currentCountry = 'UK';
 	// const res = await fetch(`/api/genres?${params.slug}`);
-	movies = await res.json();
+	// movies = await res.json();
 	const movieData: Movie[] = [];
 
 	const options = {
