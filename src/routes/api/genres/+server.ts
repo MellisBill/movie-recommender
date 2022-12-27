@@ -1,6 +1,9 @@
+import { error } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 
-export const GET = (async () => {
+export const GET = (async ({ fetch, params }) => {
+	const limit = 1;
+
 	const options = {
 		method: 'GET',
 		headers: {
@@ -9,8 +12,18 @@ export const GET = (async () => {
 		}
 	};
 
-	const response = await fetch('https://imdb8.p.rapidapi.com/title/list-popular-genres', options);
-	const data = await response.json();
+	try {
+		const response = await fetch(
+			`https://imdb8.p.rapidapi.com/title/v2/get-popular-movies-by-genre?genre=${params.slug}&limit=${limit}`,
+			options
+		);
 
-	return new Response(data);
+		return response;
+	} catch (err) {
+		console.log(err);
+		throw error(400, 'Error occurred: ' + err);
+	}
+
+	// return response;
+	return new Response();
 }) satisfies RequestHandler;
