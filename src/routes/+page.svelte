@@ -90,7 +90,7 @@
 		}
 	];
 
-	let selectedGenre: string = '';
+	let selectedGenre: string = 'none';
 
 	// function add(genre: string) {
 	// 	if (addedGenres.includes(genre)) return;
@@ -111,11 +111,11 @@
 	</div>
 	<div class="py-8">
 		<h2>Selected Genre</h2>
-		{#if selectedGenre !== ''}
+		{#if selectedGenre !== 'none'}
 			<div class="flex">
 				<button
 					class="flex flex-row btn-outline mx-1 rounded-3xl border-2 px-2 py-1 my-2 active:border-yellow-500 hover:border-yellow-500 hover:bg-transparent"
-					on:click={() => (selectedGenre = '')}
+					on:click={() => (selectedGenre = 'none')}
 				>
 					{selectedGenre}<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -142,5 +142,7 @@
 			</button>
 		{/each}
 	</div>
-	<button class="btn bg-yellow-400 my-3"> <a href="/titles?genre={selectedGenre}">Continue</a> </button>
+	<button class="btn bg-yellow-400 my-3">
+		<a href="/titles?genre={selectedGenre.toLowerCase()}">Continue</a>
+	</button>
 </div>

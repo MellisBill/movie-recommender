@@ -4,43 +4,54 @@ import type { PageLoad } from './$types';
 
 export const load = (async ({ fetch, url }) => {
 	const genre = url.searchParams.get('genre');
-	console.log(genre);
-	const currentCountry = 'UK';
-	// const responses = ['/title/tt11564570/', '/title/tt10640346/', '/title/tt12003946/'];
-	let movies: string[] = [];
+	const res = await fetch(`/api/titles?genre=${genre}`);
+	const title: Movie = await res.json();
 
-	const titles: Movie[] = [];
+	console.log(title);
 
-	const options = {
-		method: 'GET',
-		headers: {
-			'X-RapidAPI-Key': '1b835a42e9msh2d0ffdb02089fadp16f225jsnf2930187ec7e',
-			'X-RapidAPI-Host': 'imdb8.p.rapidapi.com'
-		}
-	};
-	
-	const res = await fetch(`/api/genres?${genre}`);
-	movies = await res.json();
+	return { title };
 
-	console.log(movies);
+	// const genre = url.searchParams.get('genre');
+	// const currentCountry = 'UK';
 
-	movies.map(async (res: string) => {
-		try {
-			const t = res.slice(7, 16);
-			const response = await fetch(
-				`https://imdb8.p.rapidapi.com/title/get-overview-details?tconst=${t}&currentCountry=${currentCountry}`,
-				options
-			);
+	// let title = '';
+	// const options = {
+	// 	method: 'GET',
+	// 	headers: {
+	// 		'X-RapidAPI-Key': '1b835a42e9msh2d0ffdb02089fadp16f225jsnf2930187ec7e',
+	// 		'X-RapidAPI-Host': 'imdb8.p.rapidapi.com'
+	// 	}
+	// };
 
-			const movie: Movie = await response.json();
+	// if (genre !== null) {
+	// 	const res = await fetch(
+	// 		`https://imdb8.p.rapidapi.com/title/v2/get-popular-movies-by-genre?genre=${genre}&limit=${limit}`,
+	// 		options
+	// 	);
 
-			titles.push(movie);
-		} catch (err) {
-			console.log(err);
+	// 	title = await res.json();
+	// }
 
-			throw error(400, 'Err: ' + err);
-		}
-	});
+	// console.log(titles);
+
+	// // movies.map(async (res: string) => {
+	// try {
+	// 	const t = res.slice(7, 16);
+
+	// 	const response = await fetch(
+	// 		`https://imdb8.p.rapidapi.com/title/get-overview-details?tconst=${t}&currentCountry=${currentCountry}`,
+	// 		options
+	// 	);
+
+	// 	const movie: Movie = await response.json();
+
+	// 	titles.push(movie);
+	// } catch (err) {
+	// 	console.log(err);
+
+	// 	throw error(400, 'Err: ' + err);
+	// }
+	// });
 	// return {
 	// 	titles: [
 	// 		{
@@ -182,6 +193,4 @@ export const load = (async ({ fetch, url }) => {
 	// 		}
 	// 	]
 	// };
-	console.log(titles.length);
-	return { titles };
 }) satisfies PageLoad;

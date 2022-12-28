@@ -1,11 +1,8 @@
 import { error } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 
-export const GET = (async ({ fetch, params, getClientAddress }) => {
-	const ip = getClientAddress();
-	const tokens = 0;
+export const GET = (async ({ fetch, url }) => {
 	
-	const limit = 3;
 
 	const options = {
 		method: 'GET',
