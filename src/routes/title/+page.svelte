@@ -4,16 +4,17 @@
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
 
-	let suggestion: Movie;
-	onMount(async () => {
+	let suggestion: Movie | null = null;
+
+	async function getSuggestion() {
+		suggestion = null;
 		const genre = $page.url.searchParams.get('genre');
 		const res = await fetch(`/api/titles?genre=${genre?.toLowerCase()}`);
 		suggestion = await res.json();
 
-		// const movie = {
+		// suggestion = {
 		// 	id: '/title/tt0944947/',
 		// 	title: {
-		// 		'@type': 'imdb.api.title.title',
 		// 		id: '/title/tt0944947/',
 		// 		image: {
 		// 			height: 1500,
@@ -63,20 +64,66 @@
 		// 		text: 'In the mythical continent of Westeros, several powerful families fight for control of the Seven Kingdoms. As conflict erupts in the kingdoms of men, an ancient enemy rises once again to threaten them all. Meanwhile, the last heirs of a recently usurped dynasty plot to take back their homeland from across the Narrow Sea.'
 		// 	}
 		// };
+	}
 
-		// 	return movie;
-		// }
+	onMount(async () => {
+		getSuggestion();
 	});
-
 </script>
 
 <div>
-	
-	{#if suggestion === undefined}
-		<h1>loading...</h1>
-	{/if}
+	<div class="mx-auto max-w-7xl">
+		<div class="mx-auto max-w-3xl">
+			{#if suggestion === null}
+				<div class="text-center my-36 text-6xl">
+					🤔
+					<div class="text-lg mt-2">Thinking...</div>
+				</div> 
+				
+			
+			{/if}
 
-	{#if suggestion !== undefined}
-		<Suggestion suggestion={suggestion} />
-	{/if}
+			{#if suggestion !== null}
+				<div class="hero">
+					<div class="hero-content flex-col lg:flex-row prose">
+						<img
+							src={suggestion.title.image.url}
+							alt={suggestion.title.title}
+							class="max-w-xs rounded-lg shadow-2xl "
+						/>
+						<div>
+							<h1 class="text-5xl font-bold">{suggestion.title.title}</h1>
+							<p class="">
+								{suggestion.plotOutline.text}
+							</p>
+							<div class="">
+								{#each suggestion.genres as genre}
+									<div class="badge badge-accent mx-1">{genre}</div>
+								{/each}
+							</div>
+
+							<div class="stats stats-vertical w-full shadow mt-6 lg:stats-horizontal">
+								<div class="stat">
+									<div class="stat-title">IMDb Rating</div>
+									<div class="stat-value">{suggestion.ratings.rating}</div>
+								</div>
+
+								<div class="stat">
+									<div class="stat-title">Running time</div>
+									<div class="stat-value">{suggestion.title.runningTimeInMinutes}mins</div>
+								</div>
+								<div class="stat">
+									<div class="stat-title">Release date</div>
+									<div class="stat-value">{suggestion.releaseDate}</div>
+								</div>
+							</div>
+							<div class="py-6">
+								<button on:click={getSuggestion} class="btn btn-primary">Gimme another one</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			{/if}
+		</div>
+	</div>
 </div>

@@ -1,5 +1,4 @@
 <script lang="ts">
-	import '../app.css';
 	import GenrePicker from './components/GenrePicker.svelte';
 
 	import { fade, fly } from 'svelte/transition';

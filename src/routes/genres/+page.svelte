@@ -94,20 +94,6 @@
 
 	let selectedGenre: string = 'none';
 	let error: boolean = false;
-	export let globalGenre: string = 'none';
-	export let genreSelected: boolean = false;
-
-	function handleOnClick(selectedGenre: string) {
-		console.log("called");
-		if (selectedGenre === 'none') {
-			error = true;
-			return;
-		} else {
-			error = false;
-			return `/title?genre=${selectedGenre}`
-		}
-
-	}
 	
 </script>
 
