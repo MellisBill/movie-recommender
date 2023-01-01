@@ -91,9 +91,19 @@
 	];
 
 	let selectedGenre: string = 'none';
+	let error: boolean = false;
 	export let globalGenre: string = 'none';
 	export let genreSelected: boolean = false;
 
+	function handleOnClick(selectedGenre: string) {
+		if (selectedGenre === 'none') {
+			error = true;
+			return;
+		} else {
+			error = false;
+			globalGenre = selectedGenre;
+		}
+	}
 </script>
 
 <div class="max-w-xl mx-auto">
@@ -102,7 +112,7 @@
 		{#if selectedGenre !== 'none'}
 			<div class="">
 				<button
-					class="flex flex-row btn-outline mx-1 rounded-md border-2 px-2 py-1 my-2 active:border-yellow-500 hover:border-yellow-500 hover:bg-transparent"
+					class="flex flex-row btn-outline mx-1 rounded-3xl border-2 px-3 py-1 my-2 active:border-yellow-500 hover:border-yellow-500 hover:bg-transparent"
 					on:click={() => (selectedGenre = 'none')}
 				>
 					{selectedGenre}<svg
@@ -123,7 +133,7 @@
 	<div class="flex flex-row flex-wrap justify-center space-x-4">
 		{#each genres as genre}
 			<button
-				class="btn-outline rounded-3xl border-2 px-2 py-1 my-2 active:border-yellow-500 hover:border-yellow-500"
+				class="btn-outline rounded-3xl border-2 px-3 py-1 my-2 hover:bg-opacity-20 hover:border-accent hover:text-white"
 				on:click={() => (selectedGenre = genre.description)}
 			>
 				{genre.description}
@@ -131,14 +141,30 @@
 		{/each}
 	</div>
 
-	<div class="flex flex-row justify-center space-x-4 mt-8">
-		<button class="btn"
-		on:click={() => genreSelected = !genreSelected}> Go back </button>
+	{#if error}
+		<div class="alert alert-error shadow-lg mt-8">
+			<div>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					class="stroke-current flex-shrink-0 h-6 w-6"
+					fill="none"
+					viewBox="0 0 24 24"
+					><path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						stroke-width="2"
+						d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+					/></svg
+				>
+				<span>Please select a genre!</span>
+			</div>
+		</div>
+	{/if}
 
-		<button
-			class="btn bg-yellow-400"
-			on:click={() => (globalGenre = selectedGenre)}
-		>
+	<div class="flex flex-row justify-center space-x-4 mt-8">
+		<button class="btn" on:click={() => (genreSelected = !genreSelected)}> Go back </button>
+
+		<button class="btn btn-primary" on:click={() => handleOnClick(selectedGenre)}>
 			Continue
 		</button>
 	</div>

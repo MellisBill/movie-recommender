@@ -38,6 +38,7 @@
 	"type": "module",
 	"dependencies": {
 		"@rive-app/canvas": "^1.0.97",
+		"@tailwindcss/typography": "^0.5.8",
 		"daisyui": "^2.46.0"
 	}
 }

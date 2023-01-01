@@ -3,7 +3,6 @@ import { error, type RequestHandler } from '@sveltejs/kit';
 
 export const GET = (async ({ fetch, url }) => {
 	const genre = url.searchParams.get('genre');
-	console.log("Hello " + genre);
 
 	const limit = 100;
 	const currentCountry = 'GB';
