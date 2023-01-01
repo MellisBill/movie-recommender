@@ -2,7 +2,7 @@
 	import type { PageData } from './$types';
 
 	export let data: PageData;
-	 const title = data.title;
+	 const suggestion = data.movieSuggestion;
 
 </script>
 
@@ -15,11 +15,11 @@
 					<div class="relative h-80 w-full overflow-hidden rounded-lg bg-white group-hover:opacity-75">
 						<img
 							class="h-full w-full object-cover object-center"
-							src={title.title.image.url}
-							alt={title.title.title}
+							src={suggestion.title.image.url}
+							alt={suggestion.title.title}
 						/>
 					</div>
-					<div>{title.title}</div>
+					<div>{suggestion.title.title}</div>
 				</div>
 
             <button class="btn">Something else</button>

@@ -3,10 +3,9 @@ import { error, type RequestHandler } from '@sveltejs/kit';
 
 export const GET = (async ({ fetch, url }) => {
 	const genre = url.searchParams.get('genre');
+	console.log("Hello " + genre);
 
-	console.log(genre);
-
-	const limit = 1;
+	const limit = 100;
 	const currentCountry = 'GB';
 
 	const options = {
@@ -18,12 +17,11 @@ export const GET = (async ({ fetch, url }) => {
 	};
 
 	const uri = `https://imdb8.p.rapidapi.com/title/v2/get-popular-movies-by-genre?genre=${genre}&limit=${limit}`;
-    console.log(uri);
 	const response = await fetch(uri, options)
 		.then((res) => res.json())
-		.then(async (suggestion: string[]) => {
-			console.log(suggestion);
-			const suggestionSliced = suggestion[0].split('/');
+		.then(async (suggestions: string[]) => {
+			const random = Math.floor(Math.random() * 100)
+			const suggestionSliced = suggestions[random].split('/');
             
 
 			const res = await fetch(

@@ -5,6 +5,14 @@
 :root {
 }
 
+.stat-value {
+	@apply text-2xl;
+}
+
+.stat-title {
+	@apply text-xs;
+}
+
 body {
 	min-height: 100vh;
 	margin: 0;

@@ -91,43 +91,55 @@
 	];
 
 	let selectedGenre: string = 'none';
+	export let globalGenre: string = 'none';
+	export let genreSelected: boolean = false;
+
 </script>
 
-<h2>What type of genre would you like to watch?</h2>
-
-<div class="py-8">
-	<h2>Selected Genre</h2>
-	{#if selectedGenre !== 'none'}
-		<div class="flex">
-			<button
-				class="flex flex-row btn-outline mx-1 rounded-3xl border-2 px-2 py-1 my-2 active:border-yellow-500 hover:border-yellow-500 hover:bg-transparent"
-				on:click={() => (selectedGenre = 'none')}
-			>
-				{selectedGenre}<svg
-					xmlns="http://www.w3.org/2000/svg"
-					height="24px"
-					width="24px"
-					viewBox=" 0 0 43 43"
-					stroke="white"
-					fill="white"
-					><path
-						d="m12.45 37.65-2.1-2.1L21.9 24 10.35 12.45l2.1-2.1L24 21.9l11.55-11.55 2.1 2.1L26.1 24l11.55 11.55-2.1 2.1L24 26.1Z"
-					/></svg
+<div class="max-w-xl mx-auto">
+	<div class="py-8">
+		<h2>Selected Genre</h2>
+		{#if selectedGenre !== 'none'}
+			<div class="">
+				<button
+					class="flex flex-row btn-outline mx-1 rounded-md border-2 px-2 py-1 my-2 active:border-yellow-500 hover:border-yellow-500 hover:bg-transparent"
+					on:click={() => (selectedGenre = 'none')}
 				>
+					{selectedGenre}<svg
+						xmlns="http://www.w3.org/2000/svg"
+						height="24px"
+						width="24px"
+						viewBox=" 0 0 43 43"
+						stroke="white"
+						fill="white"
+						><path
+							d="m12.45 37.65-2.1-2.1L21.9 24 10.35 12.45l2.1-2.1L24 21.9l11.55-11.55 2.1 2.1L26.1 24l11.55 11.55-2.1 2.1L24 26.1Z"
+						/></svg
+					>
+				</button>
+			</div>
+		{/if}
+	</div>
+	<div class="flex flex-row flex-wrap justify-center space-x-4">
+		{#each genres as genre}
+			<button
+				class="btn-outline rounded-3xl border-2 px-2 py-1 my-2 active:border-yellow-500 hover:border-yellow-500"
+				on:click={() => (selectedGenre = genre.description)}
+			>
+				{genre.description}
 			</button>
-		</div>
-	{/if}
-</div>
-<div class="flex flex-row flex-wrap max-w-lg justify-center space-x-4">
-	{#each genres as genre}
+		{/each}
+	</div>
+
+	<div class="flex flex-row justify-center space-x-4 mt-8">
+		<button class="btn"
+		on:click={() => genreSelected = !genreSelected}> Go back </button>
+
 		<button
-			class="btn-outline rounded-3xl border-2 px-2 py-1 my-2 active:border-yellow-500 hover:border-yellow-500"
-			on:click={() => (selectedGenre = genre.description)}
+			class="btn bg-yellow-400"
+			on:click={() => (globalGenre = selectedGenre)}
 		>
-			{genre.description}
+			Continue
 		</button>
-	{/each}
+	</div>
 </div>
-<button class="btn bg-yellow-400 my-3">
-	<a href="/titles?genre={selectedGenre.toLowerCase()}">Continue</a>
-</button>
